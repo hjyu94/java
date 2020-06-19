@@ -1,0 +1,108 @@
+# 오류란 무엇인가?
+    - 컴파일 오류: 프로그램 코드 작성 중 발생하는 문법적 오류
+    - 실행 오류:
+        실행 중인 프로그램이 의도 하지 않은 동작을 하거나(bug)
+        프로그램이 중지되는 오류(runtime error)
+
+    자바는 예외처리를 통하여 프로그램의 비정상 종료를 막고 log를 남길 수 있음
+
+
+[목적]
+    - 시스템이 죽지 않도록
+    - 서버에 남은 log 를 보고 앞으로도 생길 수 있는 버그를 방지하자
+
+
+# 오류와 예외 클래스
+    - 시스템 오류: 가상 머신에서 발생, 프로그래머가 처리할 수 업음
+    (동적 메모리를 다 사용한 경우, stack over flow-계속 재귀처리해서 이 쓰레드가 사용할 수 있는 스택 메모리가 바닥난 경우))
+
+    - 예외: 프로그램에서 제어 할 수 있는 오류
+    자바 프로그램에서는 예외에 대한 처리를 수행함
+    (읽으려는 파일이 없는 경우, 네트웤이나 소켓 연결 오류)
+
+
+# 예외 클래스
+    - 모든 예외 클래스의 최상위 클래스: Exception class
+
+    Exception
+    --(+)IOException
+    ------(+)FileNotFoundException
+    ------(+)SocketException
+    --(+)RuntimeException
+    ------(+)ArithmeticException
+    ------(+)IndexOutOfBoundsException
+
+
+# try-catch-resources 문
+    - 리소스를 자동으로 해제하도록 제공해주는 구문
+    - 해당 리소스가 AutoCloseable을 구현한 경우 close()를 명시적으로 호출하지 않아도 try{} 블록에서 오픈된 리소스는 정상적인 경우나, 예외 상황 모두 자동으로 close() 호출됨
+    - Java 7
+    - FileInputStream implements AutoCloseable
+    - 자바 9 이전에서는 try 문에서 리소스 객체를 생성하면 자동으로 close() 가 호출된다.
+    - 자바 9 부터는 외부에서 선언한 변수를 try 문에 그대로 써도 된다.
+
+    AutoCloseObj obj = new AutoCloseObj();
+    try(obj) {
+      // ...
+    } catch(Exception e) {
+      // ...
+    }
+
+
+# 예외 처리 미루기
+    - throws 를 사용해서 예외처리 미루기
+    - try{} 블록으로 예외를 처리하지 않고, 메서드 선언부에 throws 를 추가
+    - 예외가 발생한 메서드에서 예외 처리를 하지 않고 이 메서드를 호출한 곳에서 예외 처리를 하겠다.
+    - main() 에서 throws 를 사용하면 가상머신에서 처리된다.
+
+
+# 다중 예외 처리하기
+    - 하나의 try{} 에서 여러 예외가 발생하는 경우 catch{} 한 곳에서 처리하거나 여러 catch{} 에서 나눠서 처리할 수 있다.
+    - 가장 최상위 클래스인 Exception 클래스는 가장 마지막 catch{} 에서 처리해야 한다.
+
+    public static void main(String[] args) {
+        ThrowsException test = new ThrowsException();
+        try {
+            test.loadClass("b.txt", "java.lang.string");
+        } catch (Exception e) {
+            ...
+        } catch (FileNotFoundException e) {
+            ...
+        }
+    }
+    // 이렇게 하면 안됨! Exception 이 FileNotFoundException 보다 상위 클래스인데 먼저 예외처리로 던져져 버린다.
+
+
+# 사용자 정의 예외
+    - 기존 JDK 클래스에서 상속받아서 예외 클래스를 만들고
+    - throw 키워드로 예외를 발생 시킴
+    ex) 아이디가 null이거나 8이하 20자 이상인 경우 예외
+
+
+[실습 2]
+main() {
+    FileInputStream fis = null;
+    try {
+      fis = new FileInputStream("a.txt");
+      return;
+    } catch (FileNotFoundException e) {
+      sout(e);
+    } finally {
+      fis.close(); // 얘도 try, catch 감싸긴 해야 함
+    }
+    sout("end");
+}
+return; 되어도 finally { } 는 수행된다.
+단 sout("end")는 불리지 않는다.
+
+
+[실습 3]
+try(FileInputStream fis = new FileInputStream("a.txt")) {
+    // ...
+} catch (FileNotException e) {
+    // ...
+} catch (IOException e) {
+    // ...
+}
+
+
