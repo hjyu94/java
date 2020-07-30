@@ -1,0 +1,44 @@
+@ this
+
+- 자신의 메모리를 가리킴
+- 생성자에서 다른 생성자를 호출함
+- 인스턴스 자신의 주소를 반환
+
+
+# 자신의 메모리를 가리킴
+    public static void main(String[] args) {
+        BirthDay day = new Birtday();
+        day.setYear(2000);
+    }
+
+    stack
+
+    | this |    -> setYear()의 segmentation
+    -------
+    | day |     -> main()의 segmentation
+    --------        ^
+    | args |    ----|
+    --------
+
+
+# 생성자에서 다른 생성자 호출 시 사용 가능
+    class Person {
+        public Person(){
+            this("이름없음", 1);
+        }
+        public Person(String name, int age){
+           this.name = name;
+           this.age = age;
+        }
+    }
+
+    - 단 이 때 다른 생성자를 부르는 statement는 첫번째에 와야 한다.
+    public Person(){ // (X)
+        age = 24;
+        this("이름없음", 1);
+    }
+
+    public Person(){ // (O)
+        this("이름없음", 1);
+        age = 24;
+    }

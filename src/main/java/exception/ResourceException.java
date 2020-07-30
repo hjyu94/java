@@ -5,11 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class ResourceException {
-    // FileInputStream 은 예외를 처리해야 한다.
-    public static void main_1(String[] args) {
-        FileInputStream fis= null;
-        fis = new FileInputStream("a.txt");
-    }
+//    // FileInputStream 은 예외를 처리해야 한다.
+//    public static void main_1(String[] args) {
+//        FileInputStream fis= null;
+//        fis = new FileInputStream("a.txt");
+//    }
 
     // FileInputStream 을 열었으면 닫는 처리를 반드시 해야한다.
     // 열었을 때 예외가 발생할 수 있고 닫는 중에 예외가 발생할 수 있다.

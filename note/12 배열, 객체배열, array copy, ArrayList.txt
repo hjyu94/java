@@ -1,0 +1,55 @@
+@ 배열
+
+    int[] arr = new int[10];
+    int arr[]  = new int[10];
+    각 배열의 원소는 0, null 로 초기화 된다.
+
+    1) 가능
+        int[] arr = {1,2,3};
+
+    2) 불가능
+        int[] arr;
+        arr = { 1,2,3 };
+
+
+@ 객체 배열
+    Book[] library = new Book[5];
+    library에는 Book의 주소들이 생기는 것.
+    각각 new 를 해줘야 한다.
+
+    for(int i=0; i<library.length; ++i)
+    {
+        library[i] = new Book();
+    }
+
+
+@ array copy
+    System.arraycopy(src, srcPos, dest, destPos, length);
+    int[] arr1 = {10, 20, 30, 40, 50};
+    int[] arr2 = {1, 2, 3, 4, 5};
+
+    Sytem.arraycopy(arr1, 0, arr2, 1, 3);
+    -> arr2: 1, 10, 20, 30, 5
+
+
+@ 얕은 복사 / 깊은 복사
+    - 얕은 복사: 주소를 복사한다.
+    - 깊은 복사: 새로이 힙에 메모리를 할당한 뒤 변수, 메소드를 복사해온다.
+
+
+@ ArrayList
+    - 자바에서 제공하는 객체 배열이 구현된 클래스
+
+    # 주요 메서드
+        - boolean add(E e)
+        - int size()
+        - E get(int index)
+        - E remove(int index)
+        - boolean isEmpty()
+
+    ArrayList<String> list = new ArrayList<String>();
+    list.add("aaa");
+    int size = list.size();
+    String element = list.get(index);
+    for (String s : list)
+        System.out.println(s);

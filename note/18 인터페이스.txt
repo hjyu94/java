@@ -1,0 +1,120 @@
+# 인터페이스의 요소
+
+    1 추상 메서드
+
+    2 멤버 변수
+        : 모든 멤버변수는 상수가 된다.
+        : 인터페이스 클래스는 인스턴스화 불가능하기 때문
+
+        public interface Calc {
+          double PI = 3.14;
+          int ERROR = -999999999;
+        }
+        두 멤버 변수는 컴파일 하는 과정에서 상수로 변환된다
+
+    3 디폴트 메서드
+        : 기본 구현을 가진다. 재정의 가능하다.
+        : default void description() { ... }
+
+    4 정적 메서드
+        : 인스턴스 생성이 필요없이 인터페이스 타입으로 호출하는 메소드
+        : static int total(int[] arr) { ... }
+
+    5 private 메서드
+        : 인터페이스내에서만 사용하는 메소드, 재정의 불가능
+        : private void myMethod() { ... }
+        (기본적으로 인터페이스 내에서는 구현부를 갖지 못하고 인터페이스를 구현하는 클래스를 만들어 사용하게 되는데
+        여러 클래스들이 구현할 때 서로 다른 구현을 막기 위해서 제공)
+
+
+# 인터페이스는 어떤 객체에 대한 명제라고 보면 된다.
+(이 객체가 어떤 메서드를 제공하는 객체이다를 설명하는 일종의 설명서)
+
+
+# 인터페이스의 선언과 구현
+
+    public interface Calc {
+        double PI = 3.14;
+        int ERROR = -9999999;
+        // 멤버변수 같아보이지만 컴파일 과정에서 상수로 변환됨(public static final 이 붙는다)
+
+        int add(int num1, int num2);
+        int substract(int num1, int num2);
+        // abstract 키워드가 없지만 컴파일 과정에서 추상 메소드로 변환됨
+    }
+
+    인터페이스에 선언된 여러 메소드를 가져다 구현한다고 한다. (UML 점선, 상속은 실선)
+
+
+# 인터페이스의 역할?
+    - 클라이언트 프로그램에 어떤 메소드를 제공하는지 알려주는 명세 혹은 약속
+    - 한 객체가 어떤 인터페이스 타입이다? 인터페이스의 메소드를 모두 구현했다는 의미
+    - 클라이언트 프로그램은 실제 구현내용은 몰라도 인터페이스 정의만 알면 그 객체를 사용할 수 있다.
+    - 인터페이스를 구현해 놓은 다양한 객체를 사용하므로써 다형성을 이용한다(JDBC를 구현한 오라클, MSSQL 라이브러리)
+    (Connection 이라는 인터페이스를 오라클, MSSQL, MySql이 구현해 놓았는데 클라이언트는 그저 각 회사의 jar(라이브러리)를 인클루드 한 뒤 Connection 인터페이스의 스펙만 참고해서 사용하면 된다.)
+    (혹 오라클을 쓰다가 MSSQL로 갈아탄다고 할 지언정 사용하는 메소드는 같기 때문에 일부만 수정해주면 된다)
+
+- 추상클래스와의 차이
+    : 추상클래스는 공통되는 모듈이 있을 수도 있고 없을 수도 있고 클래스이기 때문에 상속할 때 단일상속만 가능.
+    : 인터페이스는 순수하게 명세만 되어있기 때문에 여러 인터페이스를 구현하는 클래스가 있을 수 있다. 이용 목적은 이런식으로 구현하라는 의도.
+
+
+EX)
+    public interface ABC { ... }
+    public class A implements ABC { ... }
+    public class B implements ABC { ... }
+    public class C implements ABC { ... }
+    -> A, B, C 는 각각 다른 방법으로 ABC의 메소드를 구현했다.
+    -> 클라이언트는 ABC 타입으로 선언한 abc의 메소드를 abc.a(), abc.b(), abc.c() 로 사용하지만 실제 abc가 어떤 타입의 객체인지(A? B? C?) 인지에 따라 다형성이 구현되어 각각 다른 기능이 실행될 수 있다. 하지만 클라이언트는 이를 몰라도 되며 그저 a(); b(); c(); 로 가져다 쓰면 된다.
+
+
+# 인터페이스와 strategy pattern
+    : 인터페이스를 활용하면 다양한 정책이나 알고리즘을 프로그램의 큰 수정 없이 적용, 확장 할 수 있다.
+
+
+# 여러개의 인터페이스 구현하기
+    : 인터페이스는 구현이 없으므로 하나의 클래스가 여러 인터페이스를 구현할 수 있다.
+    : 디폴트 메소드 이름이 중복되는 경우 재정의한다
+
+    public interface Buy {
+      void buy();
+      default void order(){ ... }
+    }
+    public interface Sell {
+      void sell();
+      default void order(){ ... }
+    }
+    public class Customer implements Buy, Sell {
+        public void buy() { ... }
+        public void sell() { ... }
+
+        // 중복된 메소드는 재정의한다
+        public void order() {
+            Buy.super.order();
+            Sell.super.order();
+            임의로 재정의;
+        }
+    }
+
+
+# 인터페이스 상속
+    - 구현이 없으므로 extends 뒤 여러 인터페이스를 상속 받을 수 있다.
+    - 구현이 없기 때문에 타입 상속이라고 한다.
+
+    public interface X {
+        x();
+    }
+    public interface Y {
+        y();
+    }
+    public interface MyInterface extends X, Y {
+        // X 타입이라고도 하고 Y 타입이라고도 한다
+        myMethod();
+    }
+    public class MyClass implements MyInterface {
+        --> 이 때 x(), y(), myMethod() 모두 구현해야한다
+    }
+
+
+# 인터페이스 구현과 클래스 상속 함께 사용하기
+    public class BookShelf extends Shelf implements Queue { ... }

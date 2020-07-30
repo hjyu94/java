@@ -1,0 +1,11 @@
+@ 다형성(polymorphism)
+- 객체지향 특징: 정보은닉 / 캡슐화 / 상속 / 다형성 (은캡상다)
+- 하나의 코드가 여러 자료형으로 구현되어 실행되는 것
+
+Customer::Buy();
+VIPCustomer::Buy();
+GoldCustomer::Buy();
+
+Customer A = new Customer();
+Customer B = new VIPCustomer();
+Customer C = new GoldCustomer();
