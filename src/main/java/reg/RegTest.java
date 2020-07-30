@@ -156,4 +156,12 @@ public class RegTest {
         System.out.println(Arrays.asList(split));
     }
 
+    public static void main(String[] args) {
+        String[] keywordsArr = {"A, B, C", "A,B,C", "A B C", "A  B   C"};
+        Arrays.stream(keywordsArr).forEach(keywords -> {
+           String[] keywordArr = keywords.split("[,\\s]+");
+            System.out.println(Arrays.asList(keywordArr));
+        });
+    }
+
 }
