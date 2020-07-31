@@ -1,0 +1,22 @@
+@ 컬렉션 프레임워크
+
+# 컬렉션 프레임워크란?
+    - 프로그램 구현에 필요한 자료구조와 알고리즘을 구현해 놓은 라이브러리
+    - java.util 패키지에 구현되어 있다.
+    - Collection 인터페이스와 Map 인터페이스로 구성되어있다.
+
+    (1) Collection: 원소가 하나의 객체
+    (2) Map: 원소로 Key, Value 한 쌍의 데이터를 다룬다.
+
+
+# Collection Interface (객체 집합)
+    [1] List
+        - ArrayList, Vector, LinkedList
+    [2] Set
+        - HashSet, TreeSet
+
+
+# Map (키 밸류 집합)
+    [1] HashTable - Properties
+    [2] HashMap
+    [3] TreeMap

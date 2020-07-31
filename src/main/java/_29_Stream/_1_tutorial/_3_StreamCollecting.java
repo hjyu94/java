@@ -1,4 +1,4 @@
-package stream._1_tutorial;
+package _29_Stream._1_tutorial;
 
 import java.util.*;
 import java.util.stream.Collectors;

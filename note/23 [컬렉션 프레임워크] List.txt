@@ -1,0 +1,28 @@
+@ 컬렉션 프레임워크 - List 인터페이스
+
+# List 인터페이스
+    - Collection 하위 인터페이스
+    - ArrayList, Vector, LinkedList
+
+# ArrayList, Vector
+    - 객체 배열 클래스
+    - Vector는 멀티쓰레드 프로그램에서 동기화를 지원
+    - capacity: 요소를 넣을 수 있는 전체 공간의 크기
+    - size: 몇개의 요소가 들어가있는가?
+    - 동기화: 두 개의 쓰레드가 동시에 하나의 리로스에 접근할 때 순서를 맞춰서 데이터에 오류가 생기는 것을 방지한다.
+
+# ArrayList, LinkedList
+    - 순차적 구조를 구현한 클래스
+    - ArrayList: 배열을 구현한 클래스, 논리적 순서와 물리적 순서가 동일, 탐색이 빠르다. O(1)
+    - LinkedList: 다음 요소에 대한 주소값을 가지고 있고 추가나 삭제가 쉽다.
+
+[ex]
+    LinkedList<String> myList = new LInkedList<String>();
+    myList.add("A");
+    System.out.println(myList); // toString() 이 오버라이딩 되어있다.
+    myList.add(0, "B");
+
+    for(int i=0; i<myList.size(); i++) {
+       String str = myList.get(i); // list 에만 있다. set interface에는 없다.
+       System.out.println(str);
+    }

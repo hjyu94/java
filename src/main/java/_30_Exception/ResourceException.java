@@ -1,8 +1,7 @@
-package exception;
+package _30_Exception;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 public class ResourceException {
 //    // FileInputStream 은 예외를 처리해야 한다.

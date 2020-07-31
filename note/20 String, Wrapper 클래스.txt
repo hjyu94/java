@@ -1,0 +1,49 @@
+@ String, Wrapper 클래스
+
+# String
+
+    (1) str1 != str2
+
+        String str1 = new String("abc")
+        String str2 = new String("abc")
+
+        힙 메모리에 메모리를 할당하고 str1은 그 메모리 주소를 가리킨다
+
+    (2) str3 == str4
+
+        String str3 = "abc"
+        String str4 = "abc"
+
+        숫자나 문자열이 쓰일 때는, 매번 쓸 때마다 다른 값이 들어오는게 아니고
+        상수풀이란게 있어서 상수풀에서 필요한 리터럴을 가져다 쓴다는 것.
+
+    - String은 immutable하다.
+        :한번 선언되거나 생성된 문자열은 변경할 수 없다
+        : concat하는 경우는 새로운 문자열이 생성되는 것
+        -> StringBuilder, StringBuffer를 사용한다.
+
+        가변적인 char[] 배열을 멤버변수로 가지고 있는 클래스
+        문자열을 변경하거나 연결하는 경우 사용히면 편리.
+        toString() 으로 String 반환
+
+    (1) StringBuilder: 단일 쓰레드 프로그래밍에서 주로 사용
+    (2) StringBuffer: 멀티 쓰레드 프로그래밍에서 동기화가 보장된다.
+
+        String java = new String("java");
+        StringBuilder buffer = new StringBuilder(java);
+        buffer.append("android");
+        java = buffer.toString();
+
+        문자열을 연결하는 경우 문자열의 주소가 계속 바뀌지만 StringBuilder/Buffer 의 경우 주소가 항상 같다.
+
+
+# Wrapper 클래스
+
+    boolean -> Boolean
+    byte -> Byte
+    char -> Character
+    short -> Short
+    int -> Integer
+    long -> Long
+    float -> Float
+    double -> Double

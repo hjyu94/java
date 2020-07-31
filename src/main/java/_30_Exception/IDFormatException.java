@@ -1,4 +1,4 @@
-package exception;
+package _30_Exception;
 
 public class IDFormatException extends Exception {
     public IDFormatException(String message) {

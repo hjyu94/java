@@ -1,0 +1,90 @@
+@ 내부 클래스
+    - 내부에서 사용하기 위한 클래스
+    - 주로 외부 클래스 생성자에서 내부 클래스 생성
+    - 인스턴스 내부 클래스, 정적 내부 클래스, 지역 내부 클래스, 익명 내부 클래스
+
+
+(ex)
+    class Outer {
+        int outNum = 100;
+        static int sNum = 200;
+
+        Runnable getRunnable(int i) {
+            int num = 100;
+            class MyRunnable implements Runnable {
+                @Override
+                public void run() {
+                    num += 10;
+                    i = 200;
+                    System.out.println(num);
+                    System.out.println(i);
+                    System.out.println(outNum);
+                    System.out.println(Outer.sNum);
+                }
+            }
+            return new MyRunnable();
+        };
+        // 바깥 클래스의 메소드 안에서 내부 클래스 선언
+        // 이 경우 num, i 는 지역변수가 되고 안에서 final로 바뀜
+        // 따라서 10을 더하거나 값을 변경할 수 없다.
+        // 단 참조는 가능
+    }
+
+    class Test {
+        psvm(String[] args){
+            Outer outer = new Outer();
+            Runnable runnable = outer.getRunnable(50);
+
+            runnable.run():
+            runnable.run():
+            runnable.run():
+        }
+    }
+
+    50이 i로 들어감.
+    i는 지역변수로 getRunnable()이 끝나면 사라진다.
+
+    getRunnable()이 종료되더라도 run() 은 언제든지 호출 될 수 있기 때문에
+    getRunnable()안에서 i, num 을 변경, 수정할 수 없게 되어야 해서 final로 만들어 버림.
+
+    MyRunnable 클래스의 이름은 쓸 일이 없다.
+    익명 클래스를 리턴하는 걸로 바꿔 써도 똑같다.
+
+(ex)
+    class Outer {
+        int outNum = 100;
+        static int sNum = 200;
+
+        Runnable getRunnable(int i) {
+            int num = 100;
+            return new Runnable() {
+                @Override
+                public void run() {
+                    num += 10;
+                    i = 200;
+                    System.out.println(num);
+                    System.out.println(i);
+                    System.out.println(outNum);
+                    System.out.println(Outer.sNum);
+                }
+            }
+        };
+
+        Runnable runner = new Runnable(){
+            @Override
+            public void run() {
+                System.out.println("test");
+            }
+        };
+    }
+
+    class Test {
+        psvm(String[] args){
+            Outer outer = new Outer();
+            outer.runner.run();
+        }
+    }
+
+    익명 내부 클래스에서 바로 인터페이스나 추상 클래스의 생성을 할 수 있다.
+    (원래는 인터페이스나 추상클래스를 상속받은 클래스를 만들고 그 클래스를 생성해서 썼는데
+    단 하나의 인터페이스나 단 하나의 추상 클래스의 경우는 클래스 이름 없이 바로 new 키워드를 이용해서 생성할 수 있다.)

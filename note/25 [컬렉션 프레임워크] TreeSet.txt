@@ -1,0 +1,110 @@
+@ 컬렉션 프레임워크 - TreeSet 인터페이스
+
+# TreeSet
+    - 객체의 정렬에 사용되는 클래스
+    - 주로 정렬, 검색에 사용된다.
+    - 중복 허용 X, 오름차순이나 내림차순으로 객체 정렬
+    - 내부적으로 이진 검색 트리로 구현되어있다.
+    - 이진 검색 트리에 자료가 저장될 때 비교하여 저장될 위치를 정함
+    - 객체 비교를 위해 Comparable 이나 Comparator 인터페이스를 구현해야 한다.
+
+(ex)
+    psvm(){
+       TreeSet<String> treeSet = new TreeSet<>();
+       treeSet.add("ㄱㄱㄱ");
+       treeSet.add("ㄴㄴㄴ");
+       treeSet.add("ㄷㄷㄷ");
+       for (String str : treeSet) {
+          System.out.println(str);
+       }
+    }
+    // ㄱㄱㄱ, ㄴㄴㄴ, ㄷㄷㄷ 순서대로 출력됨
+    // String 이 Comparable 인터페이스를 이미 구현했기 때문
+
+
+(ex) 회원의 id 순서대로 정렬을 해보자.
+
+    public class MemberHashSet {
+       private TreeSet<Member> treeSet;
+
+       public MemberHashSet() {
+          treeSet = new TreeSet<Member>();
+       }
+
+       public void addMember(Member member) {
+          treeSet.add(member);
+       }
+
+       public boolean removeMember(int memberId) {
+          Iterator<Member> ir = treeSet.iterator();
+          while(ir.hasNext()) {
+             Member member = ir.next();
+             if( member.getMemberId() == memberId) {
+                treeSet.remove(member);
+                return true;
+             }
+             return false;
+          }
+       }
+
+       public void showAllMember() {
+          for (Member member : treeSet) {
+             System.out.println(member);
+          }
+       }
+    }
+
+    main() {
+       MemberHashSet manager = ... ;
+       memeber.addMember(new Member(3, "ㄱㄱ"));
+       memeber.addMember(new Member(1, "ㄴㄴ"));
+       memeber.addMember(new Member(2, "ㄷㄷ"));
+    }
+
+    TreeSet<Member> treeSet;
+    이대로 실행해보면 에러가 난다.
+    -> Member 클래스가 Comparable 을 구현해야 함.
+
+
+# Comparable 인터페이스 구현하기
+
+    public class Member implements Comparable<Member>{
+       @Override
+       public int compareTo(Member member) {
+          return (this.memberId - member.memberId);
+       }
+       // return 값이 양수면 오름차순 정렬
+       // return 값이 음수면 내림차순 정렬
+    }
+    // 이미 String 클래스에 compareTo 가 재정의되어있음
+    // return this.memberName.compareTo(member.memberName); 로도 가능하다.
+
+
+# Comparable, Comparator 인터페이스
+
+    - 정렬 대상이 되는 클래스가 구현해야 한다.
+    - Comparable: compareTo(v1); // this와 매개변수를 비교
+    - Comparator: compare(v1, v2); // 두 개의 매개변수를 비교
+
+    TreeSet 생성자에 Comparator가 구현된 객체를 매개변수로 전달
+    TreeSet<Member> treeSet = new TreeSet<Member>(new Member());
+
+
+# Comparable, Comparator 비교
+
+    - 일반적으로 Comparable 더 사용
+    - 이미 Comparable이 구현되어있는 경우 Comparator를 이용해 다른 정렬 방식을 정의할 수 있다.
+
+[ex]
+    class MyCompare implements Comparator<String> {
+       @Override
+       public intcompare(String s1, String s2) {
+          return s1.compareTo(s2) * (-1);
+       }
+    }
+
+    main() {
+       TreeSet<String> treeSet = new TreeSet<String>(new MyCompare());
+    }
+
+    스트링 내림차순으로 정렬하는 Set 이 만들어진다.

@@ -1,6 +1,5 @@
-package stream._1_tutorial;
+package _29_Stream._1_tutorial;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;

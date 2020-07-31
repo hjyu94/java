@@ -1,4 +1,4 @@
-package stream._1_tutorial;
+package _29_Stream._1_tutorial;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
